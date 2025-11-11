@@ -1,0 +1,17 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build (g++)",
+      "type": "shell",
+      "command": "powershell",
+      "args": [
+        "-NoProfile",
+        "-Command",
+        "if (!(Test-Path build)) { New-Item -ItemType Directory -Path build | Out-Null }; $src = Get-ChildItem -LiteralPath src -Filter *.cpp | ForEach-Object {$_.FullName}; g++ -std=c++17 -g -O0 -Wall -Wextra -pedantic @src -Iinclude -o build/app.exe"
+      ],
+      "group": { "kind": "build", "isDefault": true },
+      "problemMatcher": ["$gcc"]
+    }
+  ]
+}
