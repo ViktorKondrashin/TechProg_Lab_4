@@ -6,7 +6,7 @@ Node::Node(std::size_t valueNode, std::size_t childCap) : valueNode_(valueNode),
 }
 
 Node::~Node() {
-    for (int i = 0; i < childCap_; ++i) {
+    for (size_t i = 0; i < childCap_; ++i) {
         delete childs_[i];
     }
     delete[] childs_;
