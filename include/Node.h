@@ -1,28 +1,39 @@
 //Node.h
 #pragma once
 
+#include <cstddef>   
+
 class Node{
 public:
 
-//значение и кол детей
-Node(int a, int b);
-//
-bool addChild();
+///значение узла и емкость массива детей
+Node(size_t valueNode, size_t childCap);
+~Node();
+
+/// @brief добавить ребенка
+/// @param child ребенок
+/// @param number место в списке детей
+/// @return корректный ввод
+bool addChild(Node* child, size_t number);
+
+///геттеры
+inline int valueNode() const { return valueNode_; };
+inline size_t childCount() const { return childCount_; };
 
 private:
+///массив узлов
+Node** childs_ = nullptr;
+
 //значение узла
-int value;
+int valueNode_ = 0;
 
 //количество узлов детей
-int childCount;
+size_t childCount_ = 0;
 
 //емкость массива детей
-int childCap;
+size_t childCap_ = 0;
 
 //высота узла
-int height;
-
-//создать ребенка
-void makeChild();
+size_t height_ = 0;
 
 };
