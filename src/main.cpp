@@ -4,20 +4,29 @@
 
 #include "Node.h"
 #include "TreeIO.h"
+#include "HandlerRangeTree.h"
 
-bool selectDataInputMethod();
+bool selectDataInput();
 
 int main(){
     setlocale(LC_ALL, "Russian");
-    std::ifstream fin("input.txt");
-    Node* root = TreeIO::BildTreeFromStream(selectDataInputMethod() ? std::cin : fin);
+    std::ifstream fin("asstets/data/input.txt");
+    //проверка на открытие потока
+    if (!fin) {
+        std::cerr << "Не удалось открыть файл\n";
+        return 1;
+    }
+    Node* root = TreeIO::BuildTreeFromStream(selectDataInput() ? fin : std::cin);
+    
+    HandlerRangeTree HandlerRoot(root, 2, 5);
+
 
     // Node root = new Node(3, 3);
     // Node left = new Node(3, 3);
     
 }
 
-bool selectDataInputMethod() {
+bool selectDataInput() {
     std::cout << "Выберите ввод данных:\n"
     "1. Ввести с клавиатуры\n"
     "2. Считать из файла\n"
@@ -40,6 +49,6 @@ bool selectDataInputMethod() {
     }
     else {
         std::cout << "Некорректный ввод, попробуйте еще раз" << std::endl;
-        selectDataInputMethod();
+        selectDataInput();
     }
 }

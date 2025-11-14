@@ -2,6 +2,7 @@
 #include "Node.h"
 
 Node::Node(std::size_t valueNode, std::size_t childCap) : valueNode_(valueNode), childCap_(childCap) {
+    if (childCap_ == 0) return;
     childs_ = new Node*[childCap]{};
 }
 

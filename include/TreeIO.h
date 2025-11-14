@@ -5,5 +5,5 @@ struct Node;
 
 namespace TreeIO {
 
-    Node* BildTreeFromStream(std::istream& in);
+    Node* BuildTreeFromStream(std::istream& in);
 };

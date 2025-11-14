@@ -13,13 +13,15 @@ public:
 
     /// @brief добавить ребенка
     /// @param child ребенок
-    /// @param number место в списке детей
+    /// @param number место в списке детей, от 0
     /// @return корректный ввод
     bool addChild(Node* child, size_t number);
 
     ///геттеры
     inline int valueNode() const { return valueNode_; };
-    inline size_t childCount() const { return childCount_; };
+    inline size_t childCap() const { return childCap_; };
+    inline Node** childs() const { return childs_; };
+    inline size_t height() const { return height_; };
 
 private:
     ///массив узлов
@@ -28,7 +30,7 @@ private:
     //значение узла
     int valueNode_ = 0;
 
-    //количество узлов детей
+    //количество узлов детей (кол ненулевых детей)
     size_t childCount_ = 0;
 
     //емкость массива детей
