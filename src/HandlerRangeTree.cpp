@@ -4,23 +4,48 @@
 #include "HandlerRangeTree.h"
 HandlerRangeTree::HandlerRangeTree(Node* root, size_t minHeight, size_t maxHeight):
     root_(root), minHeight_(minHeight), maxHeight_(maxHeight) {
-        SearchSubTree(root, 0);
+        SearchSubTree(root_, 0);
     }
 
 void HandlerRangeTree::SearchSubTree(Node* node, size_t trueTree){
     if (!node) return;
 
+    //обрабатываем всегда когда заходим в новый узел и только
+    root_ = node;
+    trueTree += ChekHeightNodeInRange(node, 0);
+    
     for (size_t i = 0; i < node->childCap(); ++i) {
-        trueTree += ChekHeightNodeInRange();
-
-        //если нет детей, то массива нет, читать нельзя
-        if(node->childs[i]->)
-        SearchSubTree(node->childs[i], trueTree);
+        
+        
+        SearchSubTree(node->childs()[i], trueTree);
+        
     }
 }
+//проходимся полнотью по поддереву до листов, высчитывая входимость в диапазон
+bool HandlerRangeTree::ChekHeightNodeInRange(Node* rootSubTree, size_t counterTrueTree){
+ 
+    //если пришли к листу
+    if(rootSubTree->childs() == nullptr){
+        size_t currentHeight = root_-> height() - rootSubTree->height();
+        if (currentHeight <= maxHeight_ || currentHeight >= minHeight_)
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+        
+    }
+
+    for(size_t indChild = 0; indChild < rootSubTree->childCap(); ++indChild){
+        counterTrueTree += ChekHeightNodeInRange(rootSubTree->childs()[indChild], counterTrueTree);
+    }
+
+}
 //         *
-//        /
-//       *
+//        / \
+//       *   *
 //      / \
 
 // bool ChekHeightNodeInRange
