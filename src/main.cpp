@@ -18,7 +18,9 @@ int main(){
     }
     Node* root = TreeIO::BuildTreeFromStream(selectDataInput() ? fin : std::cin);
     
-    HandlerRangeTree HandlerRoot(root, 2, 5);
+    HandlerRangeTree HandlerRoot(root, 1, 5);
+
+    std::cout << "Колличество поддеревьев, листья которых находятся в заданном диапазоне высот от корня поддерева." << HandlerRoot.countSubTreeInRange() << std::endl;
 
 
     // Node root = new Node(3, 3);
