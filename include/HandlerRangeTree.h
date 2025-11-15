@@ -11,7 +11,7 @@ HandlerRangeTree(Node* root, size_t minHeight, size_t maxHeight);
 inline size_t countSubTreeInRange () {return trueTree;}
 private:
     //добовляет поддеревья, подходящие под диапазон
-    void ChekHeightNodeInRange(Node* rootSubTree);
+    bool CheckSubtree(Node* node, size_t depthFromRoot);
     //Поиск всех поддеревье, листья которых находятся 
     //в заданном диапазоне высот от корня поддерева.
     void SearchSubTree(Node* node);

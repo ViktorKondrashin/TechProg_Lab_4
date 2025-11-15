@@ -7,42 +7,43 @@ HandlerRangeTree::HandlerRangeTree(Node* root, size_t minHeight, size_t maxHeigh
         SearchSubTree(root_);
     }
 
-void HandlerRangeTree::SearchSubTree(Node* node){
+// true  - все листья этого поддерева в диапазоне
+// false - найден хотя бы один лист вне диапазона
+bool HandlerRangeTree::CheckSubtree(Node* node, size_t depthFromRoot) {
+    if (!node) return true; // пустая ветка "не портит" поддерево
+
+    bool hasChild = false;
+    bool allGood = true;
+
+    for (size_t i = 0; i < node->childCap(); ++i) {
+        Node* child = node->childs()[i];
+        if (!child) continue;
+
+        hasChild = true;
+        if (!CheckSubtree(child, depthFromRoot + 1)) {
+            allGood = false;
+        }
+    }
+
+    // если детей нет — это лист
+    if (!hasChild) {
+        return depthFromRoot >= minHeight_ && depthFromRoot <= maxHeight_;
+    }
+
+    return allGood;
+}
+void HandlerRangeTree::SearchSubTree(Node* node) {
     if (!node) return;
 
-    //обрабатываем всегда когда заходим в новый узел и только
-    root_ = node;
-    ChekHeightNodeInRange(node);
-    
+    if (CheckSubtree(node, 0)) {
+        ++trueTree; // это поддерево подходит
+    }
+
     for (size_t i = 0; i < node->childCap(); ++i) {
-        
-        
-        SearchSubTree(node->childs()[i]);
-        
+        Node* child = node->childs()[i];
+        if (!child) continue;
+        SearchSubTree(child);
     }
-}
-//проходимся полнотью по поддереву до листов, высчитывая входимость в диапазон
-void HandlerRangeTree::ChekHeightNodeInRange(Node* rootSubTree){
- 
-    //если пришли к листу
-    if(rootSubTree->childs() == nullptr){
-        size_t currentHeight = root_-> height() - rootSubTree->height();
-        if (currentHeight <= maxHeight_ || currentHeight >= minHeight_)
-        {
-            ++trueTree;
-            return;
-        }
-        else
-        {
-            return;
-        }
-        
-    }
-
-    for(size_t indChild = 0; indChild < rootSubTree->childCap(); ++indChild){
-        ChekHeightNodeInRange(rootSubTree->childs()[indChild]);
-    }
-
 }
 //         *
 //        / \
